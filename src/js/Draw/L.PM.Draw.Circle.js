@@ -209,4 +209,7 @@ Draw.Circle = Draw.extend({
             this.enable();
         }
     },
+    removeFirstVertex() {
+        //
+    }
 });

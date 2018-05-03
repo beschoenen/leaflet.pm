@@ -227,4 +227,10 @@ Draw.Rectangle = Draw.extend({
             this.enable();
         }
     },
+    removeFirstVertex() {
+        if (this.enabled()) {
+            this.disable();
+            this.enable();
+        }
+    }
 });

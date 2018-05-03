@@ -276,4 +276,12 @@ Draw.Line = Draw.extend({
             this._syncHintLine();
         }
     },
+    removeFirstVertex() {
+        if (this.enabled() && this._layer && this._layer.pm.removeLastVertex(true)) {
+            const layers = this._layerGroup.getLayers();
+            const lastVertex = layers[0];
+            this._layerGroup.removeLayer(lastVertex);
+            this._syncHintLine();
+        }
+    }
 });

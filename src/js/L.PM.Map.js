@@ -33,6 +33,9 @@ const Map = L.Class.extend({
     removeLastVertex(shape) {
         this.Draw.removeLastVertex(shape);
     },
+    removeFirstVertex(shape) {
+        this.Draw.removeFirstVertex(shape);
+    },
     setPathOptions(options) {
         this.Draw.setPathOptions(options);
     },

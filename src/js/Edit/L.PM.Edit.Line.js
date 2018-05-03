@@ -568,4 +568,20 @@ Edit.Line = Edit.extend({
 
         return wasRemoved;
     },
+    removeFirstVertex(isDrawing) {
+        let wasRemoved = false;
+        const layer = this._layer;
+        if (layer && layer.pm && layer._map) {
+            layer.pm.enable();
+            const markers = layer.pm._markers;
+            if (markers.length > 0) {
+                const marker = markers[0];
+                this._removeMarker({ target: marker }, isDrawing);
+                wasRemoved = true;
+            }
+            layer.pm.disable();
+        }
+
+        return wasRemoved;
+    },
 });
