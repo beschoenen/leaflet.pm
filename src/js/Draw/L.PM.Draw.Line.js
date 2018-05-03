@@ -277,7 +277,7 @@ Draw.Line = Draw.extend({
         }
     },
     removeFirstVertex() {
-        if (this.enabled() && this._layer && this._layer.pm.removeLastVertex(true)) {
+        if (this.enabled() && this._layer && this._layer.pm.removeFirstVertex(true)) {
             const layers = this._layerGroup.getLayers();
             const lastVertex = layers[0];
             this._layerGroup.removeLayer(lastVertex);
