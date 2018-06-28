@@ -30,6 +30,7 @@
         "@babel/preset-env": "^7.0.0-beta.40",
         "@types/leaflet": "^1.2.7",
         "babel-loader": "^8.0.0-beta.0",
+        "copy-webpack-plugin": "^4.5.2",
         "css-loader": "^0.28.0",
         "cypress": "^3.0.1",
         "eslint": "^4.18.2",

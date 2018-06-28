@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     watch: false,
@@ -39,6 +40,7 @@ module.exports = {
     },
     plugins: [
         new ExtractTextPlugin('leaflet.pm.css'),
+        new CopyWebpackPlugin([{ from: path.join(__dirname, 'index.d.ts'), to: path.join(__dirname, 'dist') }]),
         new UglifyJsPlugin({
             uglifyOptions: {
                 ie8: true,
