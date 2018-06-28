@@ -28,13 +28,9 @@ beforeEach(() => {
             const { L } = contentWindow;
 
             // mapbox tiles
-            const mapboxTiles = L.tileLayer(
-                `https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=${accessToken}`,
-                {
-                    attribution:
-                        '&copy; <a href="https://www.mapbox.com/feedback/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-                },
-            );
+            const mapboxTiles = L.tileLayer(`https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=${accessToken}`, {
+                attribution: '&copy; <a href="https://www.mapbox.com/feedback/">Mapbox</a> &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            });
 
             // create the map
             contentWindow.map = L.map('map')

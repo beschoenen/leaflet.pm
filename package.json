@@ -1,6 +1,6 @@
 {
     "name": "leaflet.pm",
-    "version": "0.25.0",
+    "version": "0.25.0-andes",
     "description": "A Leaflet Plugin For Editing Geometry Layers in Leaflet 1.0",
     "keywords": [
         "leaflet",
@@ -22,11 +22,13 @@
         "@turf/difference": "6.x",
         "@turf/intersect": "6.x",
         "@turf/kinks": "6.x",
-        "lodash": "^4.17.10"
+        "lodash": "^4.17.10",
+        "tape": "^4.9.1"
     },
     "devDependencies": {
         "@babel/core": "^7.0.0-beta.40",
         "@babel/preset-env": "^7.0.0-beta.40",
+        "@types/leaflet": "^1.2.7",
         "babel-loader": "^8.0.0-beta.0",
         "css-loader": "^0.28.0",
         "cypress": "^3.0.1",

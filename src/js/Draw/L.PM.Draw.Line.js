@@ -5,7 +5,6 @@ Draw.Line = Draw.extend({
     initialize(map) {
         this._map = map;
         this._shape = 'Line';
-        this.toolbarButtonName = 'drawPolyline';
         this._doesSelfIntersect = false;
     },
     enable(options) {
@@ -75,14 +74,10 @@ Draw.Line = Draw.extend({
         this._hintMarker.on('move', this._syncHintLine, this);
 
         // fire drawstart event
-        this._map.fire('pm:drawstart', { shape: this._shape, workingLayer: this._layer });
-
-        // toggle the draw button of the Toolbar in case drawing mode got enabled without the button
-        this._map.pm.Toolbar.toggleButton(this.toolbarButtonName, true);
-
-        // an array used in the snapping mixin.
-        // TODO: think about moving this somewhere else?
-        this._otherSnapLayers = [];
+        this._map.fire('pm:drawstart', {
+            shape: this._shape,
+            workingLayer: this._layer,
+        });
     },
     disable() {
         // disable draw mode
@@ -113,14 +108,6 @@ Draw.Line = Draw.extend({
 
         // fire drawend event
         this._map.fire('pm:drawend', { shape: this._shape });
-
-        // toggle the draw button of the Toolbar in case drawing mode got disabled without the button
-        this._map.pm.Toolbar.toggleButton(this.toolbarButtonName, false);
-
-        // cleanup snapping
-        if (this.options.snappable) {
-            this._cleanupSnapping();
-        }
     },
     enabled() {
         return this._enabled;
@@ -153,9 +140,7 @@ Draw.Line = Draw.extend({
 
         // if snapping is enabled, do it
         if (this.options.snappable) {
-            const fakeDragEvent = e;
-            fakeDragEvent.target = this._hintMarker;
-            this._handleSnapping(fakeDragEvent);
+            e.target = this._hintMarker;
         }
 
         // if self-intersection is forbidden, handle it
@@ -168,7 +153,7 @@ Draw.Line = Draw.extend({
         // problem: during draw, the marker on the cursor is not yet part
         // of the layer. So we need to clone the layer, add the
         // potential new vertex (cursor markers latlngs) and check the self
-        // intersection on the clone. Phew... - let's do it 💪
+        // intersection on the clone. Phew... - let's do it
 
         // clone layer (polyline is enough, even when it's a polygon)
         const clone = L.polyline(this._layer.getLatLngs());
@@ -192,12 +177,6 @@ Draw.Line = Draw.extend({
     _createVertex(e) {
         if (!this.options.allowSelfIntersection && this._doesSelfIntersect) {
             return;
-        }
-
-        // assign the coordinate of the click to the hintMarker, that's necessary for
-        // mobile where the marker can't follow a cursor
-        if (!this._hintMarker._snapped) {
-            this._hintMarker.setLatLng(e.latlng);
         }
 
         // get coordinate for new vertex by hintMarker (cursor marker)
@@ -237,7 +216,8 @@ Draw.Line = Draw.extend({
 
         // get coordinates, create the leaflet shape and add it to the map
         const coords = this._layer.getLatLngs();
-        const polylineLayer = L.polyline(coords, this.options.pathOptions).addTo(this._map);
+        const polylineLayer = L.polyline(coords, this.options.pathOptions)
+            .addTo(this._map);
 
         // disable drawing
         this.disable();
@@ -247,10 +227,6 @@ Draw.Line = Draw.extend({
             shape: this._shape,
             layer: polylineLayer,
         });
-
-        if (this.options.snappable) {
-            this._cleanupSnapping();
-        }
     },
     _createMarker(latlng) {
         // create the new marker
@@ -276,12 +252,4 @@ Draw.Line = Draw.extend({
             this._syncHintLine();
         }
     },
-    removeFirstVertex() {
-        if (this.enabled() && this._layer && this._layer.pm.removeFirstVertex(true)) {
-            const layers = this._layerGroup.getLayers();
-            const lastVertex = layers[0];
-            this._layerGroup.removeLayer(lastVertex);
-            this._syncHintLine();
-        }
-    }
 });

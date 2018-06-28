@@ -1,20 +1,11 @@
-import SnapMixin from '../Mixins/Snapping';
-
 const Draw = L.Class.extend({
-    includes: [SnapMixin],
     options: {
-        snappable: true,
-        snapDistance: 20,
         cursorMarker: true,
         finishOnDoubleClick: false,
         finishOn: null,
-        allowSelfIntersection: true,
         templineStyle: {},
         hintlineStyle: {
             dashArray: '5,5',
-        },
-        markerStyle: {
-            draggable: true,
         },
     },
     initialize(map) {
@@ -22,7 +13,7 @@ const Draw = L.Class.extend({
         this._map = map;
 
         // define all possible shapes that can be drawn
-        this.shapes = ['Marker', 'Line', 'Poly', 'Rectangle', 'Circle', 'Cut'];
+        this.shapes = ['Line'];
 
         // initiate drawing class for our shapes
         this.shapes.forEach((shape) => {
@@ -55,12 +46,6 @@ const Draw = L.Class.extend({
             this[shape].disable();
         });
     },
-    addControls() {
-        // add control buttons for our shapes
-        this.shapes.forEach((shape) => {
-            this[shape].addButton();
-        });
-    },
     removeLastVertex(shape) {
         if (!shape) {
             throw new Error(`Error: Please pass a shape as a parameter. Possible shapes are: ${this.getShapes().join(',')}`);
@@ -70,15 +55,6 @@ const Draw = L.Class.extend({
             this[shape].removeLastVertex();
         }
     },
-    removeFirstVertex(shape) {
-        if (!shape) {
-            throw new Error(`Error: Please pass a shape as a parameter. Possible shapes are: ${this.getShapes().join(',')}`);
-        }
-
-        if (this[shape] && this[shape].removeFirstVertex) {
-            this[shape].removeFirstVertex();
-        }
-    }
 });
 
 export default Draw;

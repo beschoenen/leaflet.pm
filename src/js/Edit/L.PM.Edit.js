@@ -1,14 +1,5 @@
-import SnapMixin from '../Mixins/Snapping';
-import DragMixin from '../Mixins/Drag';
-
 const Edit = L.Class.extend({
-    includes: [DragMixin, SnapMixin],
-    options: {
-        snappable: true,
-        snapDistance: 20,
-        allowSelfIntersection: true,
-        draggable: true,
-    },
+    options: {},
     isPolygon() {
         // if it's a polygon, it means the coordinates array is multi dimensional
         return this._layer instanceof L.Polygon;

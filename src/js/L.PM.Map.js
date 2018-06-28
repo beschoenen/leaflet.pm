@@ -2,7 +2,6 @@ const Map = L.Class.extend({
     initialize(map) {
         this.map = map;
         this.Draw = new L.PM.Draw(map);
-        this.Toolbar = new L.PM.Toolbar(map);
 
         this.map.on('layerremove', (e) => {
             if (e.layer.pm && !e.layer._pmTempLayer) {
@@ -12,29 +11,14 @@ const Map = L.Class.extend({
 
         this._globalRemovalMode = false;
     },
-    addControls(options) {
-        this.Toolbar.addControls(options);
-    },
-    removeControls() {
-        this.Toolbar.removeControls();
-    },
-    toggleControls() {
-        this.Toolbar.toggleControls();
-    },
-    controlsVisible() {
-        return this.Toolbar.isVisible;
-    },
-    enableDraw(shape = 'Poly', options) {
+    enableDraw(shape = 'Line', options) {
         this.Draw.enable(shape, options);
     },
-    disableDraw(shape = 'Poly') {
+    disableDraw(shape = 'Line') {
         this.Draw.disable(shape);
     },
-    removeLastVertex(shape) {
+    removeLastVertex(shape = 'Line') {
         this.Draw.removeLastVertex(shape);
-    },
-    removeFirstVertex(shape) {
-        this.Draw.removeFirstVertex(shape);
     },
     setPathOptions(options) {
         this.Draw.setPathOptions(options);
@@ -60,9 +44,6 @@ const Map = L.Class.extend({
                 }
             });
         }
-
-        // toogle the button in the toolbar
-        this.Toolbar.toggleButton('deleteLayer', this._globalRemovalMode);
     },
     globalRemovalEnabled() {
         return this._globalRemovalMode;
@@ -91,9 +72,6 @@ const Map = L.Class.extend({
             layer.pm.enable(options);
         });
 
-        // toggle the button in the toolbar
-        this.Toolbar.toggleButton('editPolygon', this._globalEditMode);
-
         // fire event
         this._fireEditModeEvent(true);
     },
@@ -117,9 +95,6 @@ const Map = L.Class.extend({
         layers.forEach((layer) => {
             layer.pm.disable();
         });
-
-        // toggle the button in the toolbar
-        this.Toolbar.toggleButton('editPolygon', this._globalEditMode);
 
         // fire event
         this._fireEditModeEvent(false);

@@ -569,9 +569,7 @@ Edit.Line = Edit.extend({
         const p1 = map.project(latlng1);
         const p2 = map.project(latlng2);
 
-        const latlng = map.unproject(p1._add(p2)._divideBy(2));
-
-        return latlng;
+        return map.unproject(p1._add(p2)._divideBy(2));
     },
     removeLastVertex(isDrawing) {
         let wasRemoved = false;
@@ -581,22 +579,6 @@ Edit.Line = Edit.extend({
             const markers = layer.pm._markers;
             if (markers.length > 0) {
                 const marker = markers[markers.length - 1];
-                this._removeMarker({ target: marker }, isDrawing);
-                wasRemoved = true;
-            }
-            layer.pm.disable();
-        }
-
-        return wasRemoved;
-    },
-    removeFirstVertex(isDrawing) {
-        let wasRemoved = false;
-        const layer = this._layer;
-        if (layer && layer.pm && layer._map) {
-            layer.pm.enable();
-            const markers = layer.pm._markers;
-            if (markers.length > 0) {
-                const marker = markers[0];
                 this._removeMarker({ target: marker }, isDrawing);
                 wasRemoved = true;
             }
