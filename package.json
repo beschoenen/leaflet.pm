@@ -18,6 +18,7 @@
         "dist"
     ],
     "main": "dist/leaflet.pm.min.js",
+    "types": "dist/index.d.ts",
     "dependencies": {
         "@turf/difference": "6.x",
         "@turf/intersect": "6.x",
